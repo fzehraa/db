@@ -21,9 +21,9 @@ def create_app():
 
     app.add_url_rule("/profile", view_func=views.profile_page)
 
-    app.add_url_rule("/register", view_func=views.register_page)
+    app.add_url_rule("/register", view_func=views.register_page, methods=["GET","POST"])
 
-    app.add_url_rule("/login", view_func=views.login_page)
+    app.add_url_rule("/login", view_func=views.login_page, methods=['POST', 'GET'])
 
 
     # db = Database()

@@ -1,7 +1,8 @@
 from datetime import datetime
-from flask import current_app, render_template, redirect, session
+from flask import current_app, render_template, redirect, session, request
 import mysql.connector
 from flask_mysqldb import MySQL
+import hashlib
 #from forms import RegistrationForm, LoginForm
 
 #current_app for, database is stored in the application’s configuration we need a way of accessing the application object from the view
@@ -36,16 +37,24 @@ def home_page():
     return render_template("home_page.html", day = this_day, kullanici=users, lists=lists, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def profile_page():
-    #db = current_app.config["db"] #thanks to current_app, database can be accessed through configuration
-    #movies = db.get_movies()
     return render_template("movie.html")#, movies=sorted(movies)
 
 def register_page():
-    #form = RegistrationForm()
     return render_template("register.html")
 
 def login_page():
-    #form = LoginForm()
-    return render_template("login.html")
+    error = ''
+    if request.method == 'POST':
+        if request.form['email'] == '':
+            error = 'Please enter e-mail'
+        elif request.form['password'] == '':
+            error = 'Please enter password'
+        else:
+            error = 'successfull'
+
+
+
+
+    return render_template("login.html", error=error)
 
  
