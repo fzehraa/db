@@ -18,6 +18,9 @@ mydb = mysql.connector.connect(
 )
 cursor = mydb.cursor(dictionary=True)
 
+def welcome_page():
+    return render_template("welcome.html")
+
 def home_page():
     bugun = datetime.today()
     this_day = bugun.strftime("%A")
@@ -45,7 +48,13 @@ def profile_page():
 def register_page():
     return render_template("register.html")
 
+def logout_page():
+    session.clear()
+    return redirect(url_for('welcome_page'))
+
 def login_page():
+    if 'user_id' in session:
+        return redirect(url_for('home'))
     error = ''
     if request.method == 'POST':
         if request.form['email'] == '':

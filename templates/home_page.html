@@ -8,7 +8,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h4 class="title">{{ kullanici['user_name'] }}</h4>
-        <p>Contact: {{ kullanici['mail'] }}</p>
+        
         {% for native in lists %}
           {% if kullanici['user_id'] == native['user_id'] %}
             {% if native['label'] == 0 %}
@@ -37,6 +37,7 @@
           
         <p>Country: {{ kullanici['country'] }}</p>
         <p>Registration date: {{ kullanici['create_date'] }}</p>
+        <p>Contact: {{ kullanici['mail'] }}</p>
         <p style="color:rgb(0, 0, 0);font-size:12px;">About: {{ kullanici['description'] }}</p>
         <p> </p>
         <p>**************************</p>
@@ -54,7 +55,5 @@
 
 {%endfor%}
 
-<h2>Do you want to learn a language form native speakers</h2>
-<h2>Completely for free :)</h2>
-<p class="subtitle">Have a nice {{ day }}!</p>
+
 {% endblock content %}
