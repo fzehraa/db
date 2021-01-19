@@ -46,11 +46,30 @@ def profile_page():
     return render_template("movie.html")#, movies=sorted(movies)
 
 def register_page():
-    return render_template("register.html")
+    error = ''
+    if request.method == 'POST':
+        if request.form['user_name'] == '':
+            error = 'please enter user name'
+        elif request.form['email'] == '':
+            error = 'please enter e-mail'
+        elif request.form['password'] == '' or request.form['re_password'] == '':
+            error = 'please enter password'
+        elif request.form['password'] != request.form['re_password']:
+            error = 'Passwords not matched'
+        else: 
+            sql = "INSERT INTO user SET user_name = %s, mail = %s, password = %s"
+            cursor.execute(sql, (request.form['user_name'], request.form['email'], request.form['password']))
+            mydb.commit()
+            if cursor.rowcount:
+                session['user_id'] = cursor.lastrowid
+                return redirect(url_for('welcome_page'))
+            else:
+                error = 'account could not been created because of an error'
+    return render_template("register.html", error=error)
 
 def logout_page():
     session.clear()
-    return redirect(url_for('welcome_page'))
+    return redirect(url_for('login_page'))
 
 def login_page():
     if 'user_id' in session:
