@@ -2,6 +2,10 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+    <div class="navbar-nav mr-auto">
+      <a class="nav-item nav-link" href="{{ url_for('add_language') }}">Add Language</a>
+      <a class="nav-item nav-link" href="{{ url_for('delete_language') }}">Delete Language</a>
+    </div>
     <h2>PROFILE</h2>
 
     <h2>Native Languages</h2>

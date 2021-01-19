@@ -23,6 +23,10 @@ def create_app():
 
     app.add_url_rule("/profile", view_func=views.profile_page)
 
+    app.add_url_rule("/addlanguage", view_func=views.add_language)
+
+    app.add_url_rule("/deletelanguage", view_func=views.delete_language)
+
     app.add_url_rule("/register", view_func=views.register_page, methods=["GET","POST"])
 
     app.add_url_rule("/login", view_func=views.login_page, methods=['POST', 'GET'])
@@ -30,12 +34,8 @@ def create_app():
     app.add_url_rule("/logout", view_func=views.logout_page)
 
 
-    # db = Database()
-    # db.add_language(Native_lang("English"))
-    # db.add_language(Native_lang("Turkish"))
-    # db.add_language(Native_lang("Japanese"))
-    
-    # app.config["db"] = db #adding new movies to database, we store the database object in the configuration to make it accessible to all components in the application
+    #db = Database()    
+    #app.config["db"] = db #adding new data to database, we store the database object in the configuration to make it accessible to all components in the application
     
     return app
 

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h3>Add Language</h3>
+<form action="" method="POST" class="form">
+
+  {% if error %}
+  <div class="error">
+      {{ error }}
+  </div>
+  {% endif %}
+
+  <ul>
+    <li>
+        <label for="category">Learning or Speaking?</label>
+        <select id="category" name="category_id">
+            <option value="">Select {{ request.form['category_id'] }}</option>
+            
+            <option value="0">Learning</option>
+            <option value="1">Speaking</option>
+            
+        </select>
+    </li>
+      <li>
+          <label for="category">Makale Kategorisi</label>
+          <select id="category" name="category_id">
+              <option value="">Select {{ request.form['category_id'] }}</option>
+              {% for lang_names in lang_names %}
+              <option value="{{ lang_names['language_id'] }}">{{ lang_names['name'] }}</option>
+              {% endfor %}
+          </select>
+      </li>
+      
+      <li>
+          <button type="submit">ADD</button>
+      </li>
+  </ul>
+</form>
+      
+
+{% endblock content %} <!--layouttaki container i override ediyor. oranın içinda sanki bu content block u varmış gibi-->
