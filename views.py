@@ -45,7 +45,22 @@ def home_page():
     return render_template("home_page.html", day = this_day, kullanici=users, lists=lists, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def profile_page():
-    return render_template("movie.html")#, movies=sorted(movies)
+    sql = "SELECT * FROM user ORDER BY user_id ASC"
+    cursor.execute(sql)
+    users = cursor.fetchall()
+    
+    sql2 = "SELECT * FROM list ORDER BY list_id ASC"
+    cursor.execute(sql2)
+    lists = cursor.fetchall()
+
+    sql3 = "SELECT * FROM language_in_lists ORDER BY id ASC"
+    cursor.execute(sql3)
+    lang_in_lists = cursor.fetchall()
+
+    sql4 = "SELECT * FROM language_names ORDER BY language_id ASC"
+    cursor.execute(sql4)
+    lang_names = cursor.fetchall()
+    return render_template("movie.html", kullanici=users, lists=lists, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def add_language():
     sql = "SELECT * FROM language_names ORDER BY language_id ASC"

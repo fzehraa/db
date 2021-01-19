@@ -8,30 +8,44 @@
     </div>
     <h2>PROFILE</h2>
 
-    <h2>Native Languages</h2>
-    <ul>
-      <li>German</li>
-      <li>French</li>
-      <li>Korean</li>
-    </ul> 
+    {% for kullanici in kullanici %}
+      {% if kullanici['user_id'] == session['user_id'] %}
+        <h4 class="title">Name: {{ kullanici['user_name'] }}</h4>
+        <p>Country: {{ kullanici['country'] }}</p>
 
-    
-    <h2>Practicing Languages</h2>
-    <ul>
-      <li>German</li>
-      <li>French</li>
-      <li>Korean</li>
-    </ul> 
-    
-    <h2>Country</h2>
-    <ul>
-      <li>Turkey</li>
-    </ul> 
+        {% for native in lists %}
+        {% if session['user_id'] == native['user_id'] %}
+          {% if native['label'] == 0 %}
+            <h6>Practicing Languages</h6>
+          {% else %}
+            <h6>Spoken Languages</h6>
+          {% endif %}
+            
 
-    <h2>Description</h2>
-    <p>Hello! This is Zehra from Turkey. I am learning English.</p>
-    <p>And I can help you if you want to learn Turkish.</p>
-    <p>I like reading, travelling and playing chess.</p>
-      
+                {% for lang_in_lists in lang_in_lists%}
+                {% if lang_in_lists['list_id'] == native['list_id'] %}
+                
+                  {% for  lang_name in lang_names%}
+                  {% if lang_name['language_id'] ==  lang_in_lists['language_id']%}
+                    <ul>
+                      <li>{{lang_name['name']}} ( {{ lang_in_lists['level'] }} ) </li>
+                    </ul>
+                  {% endif %}
+                  {% endfor %}
+                
+                {% endif %}
+                {% endfor %}
+
+        {% endif %}
+      {%endfor%}
+
+
+
+
+
+      {% endif %}
+    {% endfor %}
+
+   
 
 {% endblock content %} <!--layouttaki container i override ediyor. oranın içinda sanki bu content block u varmış gibi-->
