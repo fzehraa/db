@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import current_app, render_template
+from flask import current_app, render_template, redirect, session
 import mysql.connector
 from flask_mysqldb import MySQL
 #from forms import RegistrationForm, LoginForm
@@ -26,10 +26,14 @@ def home_page():
     cursor.execute(sql2)
     lists = cursor.fetchall()
 
-    sql3 = "SELECT * FROM language_in_lists"
+    sql3 = "SELECT * FROM language_in_lists ORDER BY id DESC"
     cursor.execute(sql3)
     lang_in_lists = cursor.fetchall()
-    return render_template("home_page.html", day = this_day, kullanici=users, native_lang=lists, lang_in_lists=lang_in_lists)
+
+    sql4 = "SELECT * FROM language_names ORDER BY language_id DESC"
+    cursor.execute(sql4)
+    lang_names = cursor.fetchall()
+    return render_template("home_page.html", day = this_day, kullanici=users, lists=lists, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def profile_page():
     #db = current_app.config["db"] #thanks to current_app, database can be accessed through configuration
