@@ -40,4 +40,5 @@ def create_app():
 
 if __name__ == "__main__":#if this file runs as a script do the following
     app = create_app()
+    app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
     app.run(host="127.0.0.1", port=8080)

@@ -1,11 +1,14 @@
 from datetime import datetime
-from flask import current_app, render_template, redirect, session, request
+from flask import current_app, render_template, redirect, session, request, url_for
 import mysql.connector
 from flask_mysqldb import MySQL
 import hashlib
+
 #from forms import RegistrationForm, LoginForm
 
 #current_app for, database is stored in the application’s configuration we need a way of accessing the application object from the view
+
+#app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -50,7 +53,14 @@ def login_page():
         elif request.form['password'] == '':
             error = 'Please enter password'
         else:
-            error = 'successfull'
+            sql = "SELECT * FROM user WHERE mail = %s && password = %s"
+            cursor.execute(sql, (request.form['email'], request.form['password']))
+            user = cursor.fetchone()
+            if user:
+                session['user_id'] = user['user_id']
+                return redirect(url_for('home_page'))
+            else:
+                error = 'Girdiğiniz bilgilere ait kullanıcı bulunamadı.'
 
 
 
