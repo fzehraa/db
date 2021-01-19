@@ -2,17 +2,44 @@
 {% block title %}Home{% endblock %}
 
 {% block content %} <!-- layouttaki container i override ediyor-->
+{% for k in kullanici %}
 <title>"Learn Language"</title>
 <section class="hero">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h1 class="title">LEARN ANY LANGUAGE IN EXCHANGE</h1>
-        <p class="subtitle">Have a nice {{ day }}!</p>
+        <h4 class="title">{{ k['user_name'] }}</h4>
+        <p>Contact: {{ k['mail'] }}</p>
+        <p>Native Languages: </p>
+        {% for n in native_lang %}
+          {% if k['user_id'] == n['user_id'] and n['label'] == speaking %}
+            {% for lang in lang_in_lists %}  
+              <ul>
+                <li>{{lang_in_lists['list_id']}}</li>
+              </ul> 
+            {% endfor %}
+          {% endif %}
+        {%endfor%}
+        <p>Practicing Languages: </p>        
+        <p>Country: {{ k['country'] }}</p>
+        <p>Registration date: {{ k['create_date'] }}</p>
+        <p style="color:rgb(0, 0, 0);font-size:12px;">About: {{ k['description'] }}</p>
+        <p> </p>
+        <p>**************************</p>
+        <p> </p>
+        
       </div>
     </div>
   </section>
+{% endfor %}
+
+{% for n in nativelang %}
+  <p>{{n['list_id']}}</p>
+  <p>{{n['user_id']}}</p>
+  <p>{{n['label']}}</p>
+
+{%endfor%}
 
 <h2>Do you want to learn a language form native speakers</h2>
 <h2>Completely for free :)</h2>
-
+<p class="subtitle">Have a nice {{ day }}!</p>
 {% endblock content %}

@@ -1,12 +1,11 @@
 from flask import Flask
 #from forms import RegistrationForm, LoginForm
-import mysql.connector
+
+
 
 import views
 from database import Database
 from native_lang import Native_lang
-
-
 
 
 
@@ -25,7 +24,6 @@ def create_app():
     app.add_url_rule("/register", view_func=views.register_page)
 
     app.add_url_rule("/login", view_func=views.login_page)
-
 
 
     # db = Database()
