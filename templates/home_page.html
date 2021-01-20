@@ -8,33 +8,41 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h4 class="title">{{ kullanici['user_name'] }}</h4>
-        
-        {% for native in lists %}
-          {% if kullanici['user_id'] == native['user_id'] %}
-            {% if native['label'] == 0 %}
-              <h6>Practicing Languages</h6>
-            {% else %}
-              <h6>Spoken Languages</h6>
+        <h6>Practicing Languages</h6>
+        {% for lang in lang_in_lists %}
+          {% if kullanici['user_id'] == lang['user_id'] %}
+            {% if lang['label'] == 0 %}
+              {% for  lang_name in lang_names%}
+                {% if lang_name['language_id'] ==  lang['language_id']%}
+                  <ul>
+                    <li>{{lang_name['name']}}</li>
+                  </ul>
+                {% endif %}
+              {% endfor %}
+            
             {% endif %}
-              
-
-                  {% for lang_in_lists in lang_in_lists%}
-                  {% if lang_in_lists['list_id'] == native['list_id'] %}
-                  
-                    {% for  lang_name in lang_names%}
-                    {% if lang_name['language_id'] ==  lang_in_lists['language_id']%}
-                      <ul>
-                        <li>{{lang_name['name']}} ( {{ lang_in_lists['level'] }} ) </li>
-                      </ul>
-                    {% endif %}
-                    {% endfor %}
-                  
-                  {% endif %}
-                  {% endfor %}
  
           {% endif %}
-        {%endfor%}
-          
+        
+        {% endfor %}
+
+        <h6>Spoken Languages</h6>
+        {% for lang in lang_in_lists %}
+          {% if kullanici['user_id'] == lang['user_id'] %}
+            {% if lang['label'] == 1 %}
+              {% for  lang_name in lang_names%}
+                {% if lang_name['language_id'] ==  lang['language_id']%}
+                  <ul>
+                    <li>{{lang_name['name']}}</li>
+                  </ul>
+                {% endif %}
+              {% endfor %}
+            
+            {% endif %}
+ 
+          {% endif %}
+        
+        {% endfor %}
         <p>Country: {{ kullanici['country'] }}</p>
         <p>Registration date: {{ kullanici['create_date'] }}</p>
         <p>Contact: {{ kullanici['mail'] }}</p>

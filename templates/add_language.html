@@ -13,19 +13,19 @@
 
   <ul>
     <li>
-        <label for="category">Learning or Speaking?</label>
-        <select id="category" name="category_id">
-            <option value="">Select {{ request.form['category_id'] }}</option>
+        <label for="category">0 for Learning, 1 for Speaking?</label>
+        <select id="category" name="label_id">
+            <option value="">Select {{ request.form['label_id'] }}</option>
             
-            <option value="0">Learning</option>
-            <option value="1">Speaking</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
             
         </select>
     </li>
       <li>
-          <label for="category">Makale Kategorisi</label>
-          <select id="category" name="category_id">
-              <option value="">Select {{ request.form['category_id'] }}</option>
+          <label for="category">Language          :</label>
+          <select id="category" name="languages">
+              <option value="">Select {{ request.form['languages'] }}</option>
               {% for lang_names in lang_names %}
               <option value="{{ lang_names['language_id'] }}">{{ lang_names['name'] }}</option>
               {% endfor %}

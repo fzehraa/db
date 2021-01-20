@@ -30,11 +30,11 @@ def home_page():
     sql = "SELECT * FROM user ORDER BY user_id ASC"
     cursor.execute(sql)
     users = cursor.fetchall()
-    
+    """
     sql2 = "SELECT * FROM list ORDER BY list_id ASC"
     cursor.execute(sql2)
     lists = cursor.fetchall()
-
+    """
     sql3 = "SELECT * FROM language_in_lists ORDER BY id ASC"
     cursor.execute(sql3)
     lang_in_lists = cursor.fetchall()
@@ -42,17 +42,17 @@ def home_page():
     sql4 = "SELECT * FROM language_names ORDER BY language_id ASC"
     cursor.execute(sql4)
     lang_names = cursor.fetchall()
-    return render_template("home_page.html", day = this_day, kullanici=users, lists=lists, lang_in_lists=lang_in_lists, lang_names=lang_names)
+    return render_template("home_page.html", day = this_day, kullanici=users, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def profile_page():
     sql = "SELECT * FROM user ORDER BY user_id ASC"
     cursor.execute(sql)
     users = cursor.fetchall()
-    
+    """
     sql2 = "SELECT * FROM list ORDER BY list_id ASC"
     cursor.execute(sql2)
     lists = cursor.fetchall()
-
+    """
     sql3 = "SELECT * FROM language_in_lists ORDER BY id ASC"
     cursor.execute(sql3)
     lang_in_lists = cursor.fetchall()
@@ -60,13 +60,30 @@ def profile_page():
     sql4 = "SELECT * FROM language_names ORDER BY language_id ASC"
     cursor.execute(sql4)
     lang_names = cursor.fetchall()
-    return render_template("movie.html", kullanici=users, lists=lists, lang_in_lists=lang_in_lists, lang_names=lang_names)
+    return render_template("movie.html", kullanici=users, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def add_language():
     sql = "SELECT * FROM language_names ORDER BY language_id ASC"
     cursor.execute(sql)
     lang_names = cursor.fetchall()
-    return render_template("add_language.html", lang_names=lang_names)#, movies=sorted(movies)
+
+    error = ''
+    if request.method == 'POST':
+        if request.form['label_id'] == '':
+            error = 'Please choose learning or speaking'
+        elif request.form['languages'] == '':
+            error = 'Please choose a language'
+        else:
+            sql = "INSERT INTO language_in_lists SET list_id = %s, language_id = %s"
+            cursor.execute(sql, (
+                request.form['label_id'], request.form['languages'], session['user_id'],
+                request.form['category_id'],))
+            db.commit()
+            if cursor.rowcount:
+                return redirect(url_for('post', url=slugify(request.form['title'])))
+            else:
+                error = 'Teknik bir problemden dolayı makaleniz eklenemedi'
+    return render_template("add_language.html", lang_names=lang_names, error=error)#, movies=sorted(movies)
 
 def delete_language():
     return render_template("delete_language.html")#, movies=sorted(movies)

@@ -23,9 +23,9 @@ def create_app():
 
     app.add_url_rule("/profile", view_func=views.profile_page)
 
-    app.add_url_rule("/addlanguage", view_func=views.add_language)
+    app.add_url_rule("/addlanguage", view_func=views.add_language, methods=["GET","POST"])
 
-    app.add_url_rule("/deletelanguage", view_func=views.delete_language)
+    app.add_url_rule("/deletelanguage", view_func=views.delete_language, methods=["GET","POST"])
 
     app.add_url_rule("/register", view_func=views.register_page, methods=["GET","POST"])
 
