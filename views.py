@@ -80,11 +80,33 @@ def add_language():
             if cursor.rowcount:
                 return redirect(url_for('profile_page'))
             else:
-                error = 'Teknik bir problemden dolayı makaleniz eklenemedi'
+                error = 'error'
     return render_template("add_language.html", lang_names=lang_names, error=error)#, movies=sorted(movies)
 
 def delete_language():
-    return render_template("delete_language.html")#, movies=sorted(movies)
+    sql = "SELECT * FROM user ORDER BY user_id ASC"
+    cursor.execute(sql)
+    users = cursor.fetchall()
+    """
+    sql2 = "SELECT * FROM list ORDER BY list_id ASC"
+    cursor.execute(sql2)
+    lists = cursor.fetchall()
+    """
+    sql3 = "SELECT * FROM language_in_lists ORDER BY id ASC"
+    cursor.execute(sql3)
+    lang_in_lists = cursor.fetchall()
+
+    sql4 = "SELECT * FROM language_names ORDER BY language_id ASC"
+    cursor.execute(sql4)
+    lang_names = cursor.fetchall()
+
+    if request.method == 'POST':
+        sql = "DELETE FROM language_in_lists WHERE user_id = %s, language_id = %s"
+        cursor.execute(sql, (session['user_id'], request.form.get('language1')))
+        mydb.commit()
+        return redirect(url_for('profile_page'))
+
+    return render_template("delete_language.html", kullanici=users, lang_in_lists=lang_in_lists, lang_names=lang_names)
 
 def register_page():
     error = ''

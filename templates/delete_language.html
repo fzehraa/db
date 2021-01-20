@@ -2,7 +2,7 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h3>Add Language</h3>
+<h3>Delete Language</h3>
 <form action="" method="POST" class="form">
 
   {% if error %}
@@ -11,28 +11,35 @@
   </div>
   {% endif %}
 
-  <ul>
-      <li>
-          <label for="title">Learning or Speaking?</label>
-          <input type="text" id="title" name="title" value="{{ request.form['title'] }}">
-      </li>
-      <li>
-          <label for="category">Makale Kategorisi</label>
-          <select id="category" name="category_id">
-              <option value="">Seçin {{ request.form['category_id'] }}</option>
-              {% for category in categories() %}
-              <option value="{{ category['category_id'] }}">{{ category['category_name'] }}</option>
-              {% endfor %}
-          </select>
-      </li>
-      <li>
-          <label for="content">Makale İçeriği</label>
-          <textarea name="content" id="content" cols="30" rows="10">{{ request.form['content'] }}</textarea>
-      </li>
-      <li>
-          <button type="submit">PAYLAŞ</button>
-      </li>
-  </ul>
+  {% for kullanici in kullanici %}
+      {% if kullanici['user_id'] == session['user_id'] %}
+        <h4 class="title">Name: {{ kullanici['user_name'] }}</h4>
+        <p>Country: {{ kullanici['country'] }}</p>
+
+        
+
+
+        <h6> Languages</h6>
+        {% for lang in lang_in_lists %}
+        
+        {% if session['user_id'] == lang['user_id'] %}
+          
+            {% for  lang_name in lang_names%}
+              {% if lang_name['language_id'] ==  lang['language_id']%}
+                <input type="checkbox" id="vehicle1" name="language1" value="language_id>
+              <label for="vehicle1"> {{lang_name['name']}}</label><br>
+              {% endif %}
+            {% endfor %}
+                  
+        {% endif %}
+        
+        {%endfor%}
+      {% endif %}
+    {% endfor %}
+
+    <input type="submit" value="Submit">
+
+  
 </form>
       
 
