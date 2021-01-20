@@ -101,8 +101,8 @@ def delete_language():
     lang_names = cursor.fetchall()
 
     if request.method == 'POST':
-        sql = "DELETE FROM language_in_lists WHERE user_id = %s, language_id = %s"
-        cursor.execute(sql, (session['user_id'], request.form.get('language1')))
+        sql = "DELETE FROM language_in_lists WHERE user_id = %s AND language_id = %s"
+        cursor.execute(sql, (session['user_id'], request.form.get('language1'),))
         mydb.commit()
         return redirect(url_for('profile_page'))
 
