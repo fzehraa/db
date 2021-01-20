@@ -74,13 +74,11 @@ def add_language():
         elif request.form['languages'] == '':
             error = 'Please choose a language'
         else:
-            sql = "INSERT INTO language_in_lists SET list_id = %s, language_id = %s"
-            cursor.execute(sql, (
-                request.form['label_id'], request.form['languages'], session['user_id'],
-                request.form['category_id'],))
-            db.commit()
+            sql = "INSERT INTO language_in_lists SET user_id = %s, language_id = %s, label = %s"
+            cursor.execute(sql, (session['user_id'], request.form['languages'], request.form['label_id'],))
+            mydb.commit()
             if cursor.rowcount:
-                return redirect(url_for('post', url=slugify(request.form['title'])))
+                return redirect(url_for('profile_page'))
             else:
                 error = 'Teknik bir problemden dolayı makaleniz eklenemedi'
     return render_template("add_language.html", lang_names=lang_names, error=error)#, movies=sorted(movies)
